@@ -10,6 +10,9 @@ export default function ControlPanel() {
     waveguideHeight,
     isPlaying,
     speed,
+    visualizationMode,
+    showFieldLines,
+    showEnergyFlow,
     setMode,
     setFrequency,
     setAmplitude,
@@ -17,6 +20,9 @@ export default function ControlPanel() {
     setWaveguideHeight,
     setIsPlaying,
     setSpeed,
+    setVisualizationMode,
+    setShowFieldLines,
+    setShowEnergyFlow,
     reset
   } = useSimulationStore()
 
@@ -53,27 +59,107 @@ export default function ControlPanel() {
         <label className="block text-sm font-medium text-gray-300 mb-2">
           传播模式
         </label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 mb-2">
           <button
-            onClick={() => setMode('te')}
-            className={`py-2 rounded-lg font-medium transition-all ${
-              mode === 'te'
+            onClick={() => setMode('tem')}
+            className={`py-2 rounded-lg font-medium transition-all text-sm ${
+              mode === 'tem'
                 ? 'bg-primary text-white'
                 : 'bg-white/10 text-gray-400 hover:bg-white/20'
             }`}
           >
-            TE模式
+            TEM模式
           </button>
           <button
-            onClick={() => setMode('tm')}
-            className={`py-2 rounded-lg font-medium transition-all ${
-              mode === 'tm'
+            onClick={() => setMode('te10')}
+            className={`py-2 rounded-lg font-medium transition-all text-sm ${
+              mode === 'te' || mode === 'te10'
                 ? 'bg-primary text-white'
                 : 'bg-white/10 text-gray-400 hover:bg-white/20'
             }`}
           >
-            TM模式
+            TE10模式
           </button>
+          <button
+            onClick={() => setMode('te20')}
+            className={`py-2 rounded-lg font-medium transition-all text-sm ${
+              mode === 'te20'
+                ? 'bg-primary text-white'
+                : 'bg-white/10 text-gray-400 hover:bg-white/20'
+            }`}
+          >
+            TE20模式
+          </button>
+          <button
+            onClick={() => setMode('tm11')}
+            className={`py-2 rounded-lg font-medium transition-all text-sm ${
+              mode === 'tm' || mode === 'tm11'
+                ? 'bg-primary text-white'
+                : 'bg-white/10 text-gray-400 hover:bg-white/20'
+            }`}
+          >
+            TM11模式
+          </button>
+        </div>
+      </div>
+
+      {/* 可视化选项 */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          可视化模式
+        </label>
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          <button
+            onClick={() => setVisualizationMode('field')}
+            className={`py-2 rounded-lg font-medium transition-all text-xs ${
+              visualizationMode === 'field'
+                ? 'bg-secondary text-white'
+                : 'bg-white/10 text-gray-400 hover:bg-white/20'
+            }`}
+          >
+            场强分布
+          </button>
+          <button
+            onClick={() => setVisualizationMode('vector')}
+            className={`py-2 rounded-lg font-medium transition-all text-xs ${
+              visualizationMode === 'vector'
+                ? 'bg-secondary text-white'
+                : 'bg-white/10 text-gray-400 hover:bg-white/20'
+            }`}
+          >
+            矢量场
+          </button>
+          <button
+            onClick={() => setVisualizationMode('energy')}
+            className={`py-2 rounded-lg font-medium transition-all text-xs ${
+              visualizationMode === 'energy'
+                ? 'bg-secondary text-white'
+                : 'bg-white/10 text-gray-400 hover:bg-white/20'
+            }`}
+          >
+            能流密度
+          </button>
+        </div>
+
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showFieldLines}
+              onChange={(e) => setShowFieldLines(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-600 bg-white/10 text-primary focus:ring-primary focus:ring-offset-0"
+            />
+            显示场线
+          </label>
+          <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showEnergyFlow}
+              onChange={(e) => setShowEnergyFlow(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-600 bg-white/10 text-primary focus:ring-primary focus:ring-offset-0"
+            />
+            显示能流方向
+          </label>
         </div>
       </div>
 

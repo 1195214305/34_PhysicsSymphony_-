@@ -62,7 +62,12 @@ export default function InfoPanel() {
         <div className="space-y-3 text-sm">
           <div className="flex justify-between">
             <span className="text-gray-400">传播模式:</span>
-            <span className="text-white font-medium">{mode === 'te' ? 'TE模式' : 'TM模式'}</span>
+            <span className="text-white font-medium">
+              {mode === 'te' || mode === 'te10' ? 'TE10模式' :
+               mode === 'te20' ? 'TE20模式' :
+               mode === 'tm' || mode === 'tm11' ? 'TM11模式' :
+               mode === 'tem' ? 'TEM模式' : mode.toUpperCase()}
+            </span>
           </div>
 
           <div className="flex justify-between">
@@ -73,7 +78,7 @@ export default function InfoPanel() {
           <div className="flex justify-between">
             <span className="text-gray-400">截止频率:</span>
             <span className={frequency >= cutoffFreq ? 'text-secondary' : 'text-red-400'}>
-              {cutoffFreq.toFixed(2)} GHz
+              {cutoffFreq === 0 ? '无截止频率' : `${cutoffFreq.toFixed(2)} GHz`}
             </span>
           </div>
 
@@ -104,9 +109,16 @@ export default function InfoPanel() {
 
         <div className="space-y-3 text-sm text-gray-300">
           <div>
+            <h3 className="text-white font-medium mb-1">TEM模式 (横电磁波)</h3>
+            <p className="text-xs leading-relaxed">
+              电场和磁场都垂直于传播方向，无截止频率。常见于同轴线和双导线传输线。
+            </p>
+          </div>
+
+          <div>
             <h3 className="text-white font-medium mb-1">TE模式 (横电波)</h3>
             <p className="text-xs leading-relaxed">
-              电场方向垂直于传播方向，磁场有纵向分量。TE10是矩形波导的最低阶模式。
+              电场方向垂直于传播方向，磁场有纵向分量。TE10是矩形波导的最低阶模式，TE20是第二阶模式。
             </p>
           </div>
 
@@ -120,7 +132,14 @@ export default function InfoPanel() {
           <div>
             <h3 className="text-white font-medium mb-1">截止频率</h3>
             <p className="text-xs leading-relaxed">
-              当工作频率低于截止频率时，电磁波无法在波导中传播，会发生衰减。
+              当工作频率低于截止频率时，电磁波无法在波导中传播，会发生衰减。TEM模式无截止频率。
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-white font-medium mb-1">波导波长</h3>
+            <p className="text-xs leading-relaxed">
+              波导中的波长大于自由空间波长，与工作频率和截止频率有关。频率越接近截止频率，波导波长越长。
             </p>
           </div>
         </div>
